@@ -22,7 +22,7 @@ module Polski
           calculator.push(expression)
           $stdout.write("#{calculator.result}\n")
         end
-        STDOUT.write("Bye!\n")
+        $stdout.write("Bye!\n")
         Kernel.exit
       end
     end
