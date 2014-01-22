@@ -1,32 +1,53 @@
 module Polski
   class Calculator
-    attr_accessor :history
+    attr_accessor :tokens, :history
 
     def initialize
+      self.tokens = []
       self.history = []
     end
 
     def push(expression)
-      history << expression
+      return rewind if expression =~ /rw/
+      return fast_forward if expression =~ /ff/
+      return clear if expression =~ /c/
+      self.tokens += Polski::Token.tokenize(expression)
+      self.history = []
     end
 
     def result
       stack = []
-      history.each do |expression|
-        if ['+', '-', '*', '/'].include?(expression)
-          stack << perform_operation(expression, stack.pop(2))
+      tokens.each do |token|
+        if token.operator?
+          stack << apply(token, stack.pop(token.arity + 1))
         else
-          stack << expression
+          stack << token
         end
       end
-      stack[-1]
+      stack.last
     end
 
     private
 
-    def perform_operation(expression, values)
-      exp1, exp2 = values
-      result = exp1.to_f.send(expression, exp2.to_f)
+    def rewind
+      history.unshift(tokens.pop) if tokens.any?
+    end
+
+    def fast_forward
+      tokens.push(history.shift) if history.any?
+    end
+
+    def clear
+      self.tokens = []
+      self.history = []
+    end
+
+    def apply(operator, values)
+      if values.size < operator.arity + 1
+        values += Array.new(operator.arity + 1 - values.size).map(&:to_f)
+      end
+      target = values.shift.to_f
+      result = target.send(operator, *values.map(&:to_f))
       result == result.to_i ? result.to_i : result
     end
   end

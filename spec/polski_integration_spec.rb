@@ -41,4 +41,54 @@ describe 'Performing RPN calculations' do
     calc << '/'
     calc.result.should eq(3.5)
   end
+
+  it 'ignores unrecognized input' do
+    calc = Polski.new_session
+    calc << '2'
+    calc << 'foo'
+    calc << '+'
+    calc << '7'
+    calc << '*'
+    calc.result.should eq(14)
+  end
+
+  it 'performs several shorthand calculations' do
+    calc = Polski.new_session
+    calc << 'foo'
+    calc << '2 + 4 *'
+    calc.result.should eq(8)
+  end
+
+  it 'rewinds through steps' do
+    calc = Polski.new_session
+    calc << '2'
+    calc << '4'
+    calc << 'rw'
+    calc << '7'
+    calc << '*'
+    calc.result.should eq(14)
+  end
+
+  it 'fast forwards through steps' do
+    calc = Polski.new_session
+    calc << '2'
+    calc << '4'
+    calc << '3'
+    calc << 'rw'
+    calc << 'rw'
+    calc << 'ff'
+    calc << '+'
+    calc << '2'
+    calc << '*'
+    calc.result.should eq(12)
+  end
+
+  it 'clears history' do
+    calc = Polski.new_session
+    calc << '2'
+    calc << '4'
+    calc << '3'
+    calc << 'c'
+    calc.result.should be_nil
+  end
 end

@@ -1,9 +1,10 @@
 require "polski/version"
-require "polski/string_adapter"
+require "polski/adapter/string_adapter"
 require "polski/calculator"
+require "polski/token"
 
 module Polski
-  def self.new_session
-    StringAdapter.new(Calculator.new)
+  def self.session(adapter = Adapter::StringAdapter)
+    adapter.new(Calculator.new)
   end
 end
