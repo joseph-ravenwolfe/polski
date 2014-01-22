@@ -13,7 +13,7 @@ module Polski
     end
 
     def division?
-      self =~ /\//
+      self == '/'
     end
 
     def arity

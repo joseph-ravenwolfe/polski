@@ -6,24 +6,27 @@ require 'polski/calculator'
 require 'polski/calculation'
 require 'polski/token'
 
-# Pending
+# Polski provides a Ruby interface to configure and spawn calculator
+# sessions in Reverse Polish Notation.
+#
 module Polski
+  # Start a new session with Polski for a given Adapter. Defaults to the
+  # adapter set in Configuration. See `Polski.configure` to change the adapter.
+  #
   def self.start_session(adapter = Configuration.adapter)
     adapter.new(Calculator.new)
   end
 
-  # Used to configure long lived information needed throughout the scanning
-  # process. Provides access to `host` and `port` along with other information
-  # used to configure the orientation and dimensions of scanned racks.
+  # Used to configure long lived information needed throughout the process.
+  # Provides access to `adapter` used to configure the interface of the
+  # calculator.
   #
   # Example:
-  #     VisionMate.configure do |config|
-  #       config.host = "192.168.1.1"
-  #       config.port = "8080"
+  #     Polski.configure do |config|
+  #       config.adapter = MyAdapter
   #     end
   #
-  #     VisionMate::Configuration.host # => "192.168.1.1"
-  #     VisionMate::Configuration.port # => "8080"
+  #     Polski::Configuration.adapter # => MyAdapter
   #
   def self.configure(&block)
     block.call(Polski::Configuration)

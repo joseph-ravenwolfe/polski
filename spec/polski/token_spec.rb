@@ -31,7 +31,7 @@ describe Polski::Token do
   end
 
   describe '#arity' do
-    it 'returns the arity plus one based for an operator' do
+    it 'it returns the operator arity' do
       token = Polski::Token.new('/')
       token.arity.should eq(2)
     end

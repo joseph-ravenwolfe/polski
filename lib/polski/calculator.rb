@@ -17,9 +17,9 @@ module Polski
     # and `fast_forward` when provided.
     #
     def push(expression)
-      return rewind if expression =~ /rw/
-      return fast_forward if expression =~ /ff/
-      return clear if expression =~ /c/
+      return rewind if expression =~ /^rw/
+      return fast_forward if expression =~ /^ff/
+      return clear if expression =~ /^c/
       self.tokens += Polski::Token.parse(expression)
       self.history = []
     end
