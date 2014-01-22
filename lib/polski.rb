@@ -1,5 +1,6 @@
 require "polski/version"
 require "polski/adapter/string_adapter"
+require "polski/adapter/console_adapter"
 require "polski/calculator"
 require "polski/token"
 
