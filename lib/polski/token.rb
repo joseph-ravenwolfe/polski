@@ -1,4 +1,8 @@
 module Polski
+  # Token acts as an interface layer between a Calculator and string
+  # expressions. Strings can be parsed into multiple tokens and provide
+  # conveniences like the ability to distinguish values from operators.
+  #
   class Token < String
     def initialize(expression)
       super

@@ -1,5 +1,9 @@
 module Polski
   module Adapter
+    # The String Adapter acts as a Ruby String interface to the Polski
+    # calculator. It provides Array-like push functionality to the calculator
+    # and returns calculated results.
+    #
     class StringAdapter
       attr_accessor :calculator
 

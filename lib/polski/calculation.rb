@@ -1,4 +1,7 @@
 module Polski
+  # Calculation stores mathematical expressions and yields the result of those
+  # expressions when commanded.
+  #
   class Calculation
     attr_accessor :target, :operator, :operands
 
@@ -8,6 +11,9 @@ module Polski
       self.target = operands.shift
     end
 
+    # Performs a calculation based on the element's operators and operands and
+    # yields the result.
+    #
     def apply
       if operator.division? && operands.all?(&:zero?)
         warn "Can't divide #{target} by zero. Consider rewinding."
