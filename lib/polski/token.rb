@@ -1,18 +1,22 @@
 module Polski
   class Token < String
     def initialize(expression)
-      super(expression)
+      super
     end
 
     def operator?
-      ['+', '-', '*', '/'].include?(self)
+      Float.instance_methods(false).map(&:to_s).include?(self)
+    end
+
+    def division?
+      self =~ /\//
     end
 
     def arity
-      operator? ? Float(0).method(self).arity : 0
+      Float(0).method(self).arity + 1 if operator?
     end
 
-    def self.tokenize(expression)
+    def self.parse(expression)
       expression.split.map { |e| new(e) }
     end
   end

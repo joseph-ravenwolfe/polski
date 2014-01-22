@@ -11,7 +11,7 @@ module Polski
       return rewind if expression =~ /rw/
       return fast_forward if expression =~ /ff/
       return clear if expression =~ /c/
-      self.tokens += Polski::Token.tokenize(expression)
+      self.tokens += Polski::Token.parse(expression)
       self.history = []
     end
 
@@ -19,7 +19,8 @@ module Polski
       stack = []
       tokens.each do |token|
         if token.operator?
-          stack << apply(token, stack.pop(token.arity + 1))
+          operands = stack.pop(token.arity)
+          stack << Polski::Calculation.new(token, operands).apply
         else
           stack << token
         end
@@ -40,15 +41,6 @@ module Polski
     def clear
       self.tokens = []
       self.history = []
-    end
-
-    def apply(operator, values)
-      if values.size < operator.arity + 1
-        values += Array.new(operator.arity + 1 - values.size).map(&:to_f)
-      end
-      target = values.shift.to_f
-      result = target.send(operator, *values.map(&:to_f))
-      result == result.to_i ? result.to_i : result
     end
   end
 end

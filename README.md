@@ -1,29 +1,56 @@
-# Polski
+# :1234: Polski
 
-TODO: Write a gem description
+Polski is a reverse polish calculator written in Ruby.
 
-## Installation
+## Features
 
-Add this line to your application's Gemfile:
+### Highly Maintainable
 
-    gem 'polski'
+Requirements change? No problem, Polski is highly extensible. Need a new interface? We have you covered. Don't like RPN? Swap out the Calculator. Everything in Polski is built for long running evolution.
 
-And then execute:
+Polski comes pre-built with a Ruby string and Console adapter, but you can easily create your own by placing a Polski configuration in your project's `initializers` directory.
 
-    $ bundle
+```Ruby
+# Create a Console adapter that uses Emoji prompts.
+class MyEmojiAdapter
+  # ...
+end
 
-Or install it yourself as:
+Polski.configure do |config|
+  config.adapter = MyEmojiAdapter
+end
+```
 
-    $ gem install polski
+### Time Machine
+
+![Delorean](http://www.moviecarmania.com/prodimages/BackToTheFuture_2710_L.jpg)
+
+Make a mistake? Don't panic, just rewind and fast forward through time with `rw`, and `ff`. You'll feel like a master of the universe.
+
+```Shell
+> 2 30 +
+32 # Whoops
+> rw
+30
+> rw
+2
+> 0.3 +
+2.3
+> q
+Bye!
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+Install the Polski gem and run `pc` - *Polski Calculator*.
 
-## Contributing
+Or in Ruby:
 
-1. Fork it ( http://github.com/<my-github-username>/polski/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+```Ruby
+calc = Polski.start_session
+calc << "2 3 +"
+# => 5
+calc << "2"
+# => 2
+calc << "*"
+# => 10

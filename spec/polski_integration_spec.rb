@@ -1,8 +1,8 @@
 require_relative '../lib/polski'
 
 describe 'Performing RPN calculations' do
+  let(:calc) { Polski.start_session }
   it 'sums 5 and 8' do
-    calc = Polski.new_session
     calc << '5'
     calc << '8'
     calc << '+'
@@ -10,7 +10,6 @@ describe 'Performing RPN calculations' do
   end
 
   it 'multiplies 2 by 3 and add 5' do
-    calc = Polski.new_session
     calc << '-3'
     calc << '-2'
     calc << '*'
@@ -21,7 +20,6 @@ describe 'Performing RPN calculations' do
   end
 
   it 'sums 3 with 9 and multiplies by 2' do
-    calc = Polski.new_session
     calc << '2'
     calc << '9'
     calc << '3'
@@ -32,7 +30,6 @@ describe 'Performing RPN calculations' do
   end
 
   it 'subtracts 20 by 13 and divides by 2' do
-    calc = Polski.new_session
     calc << '20'
     calc << '13'
     calc << '-'
@@ -43,9 +40,8 @@ describe 'Performing RPN calculations' do
   end
 
   it 'ignores unrecognized input' do
-    calc = Polski.new_session
     calc << '2'
-    calc << 'foo'
+    calc << 'noop'
     calc << '+'
     calc << '7'
     calc << '*'
@@ -53,14 +49,12 @@ describe 'Performing RPN calculations' do
   end
 
   it 'performs several shorthand calculations' do
-    calc = Polski.new_session
-    calc << 'foo'
+    calc << 'noop'
     calc << '2 + 4 *'
     calc.result.should eq(8)
   end
 
   it 'rewinds through steps' do
-    calc = Polski.new_session
     calc << '2'
     calc << '4'
     calc << 'rw'
@@ -70,7 +64,6 @@ describe 'Performing RPN calculations' do
   end
 
   it 'fast forwards through steps' do
-    calc = Polski.new_session
     calc << '2'
     calc << '4'
     calc << '3'
@@ -84,7 +77,6 @@ describe 'Performing RPN calculations' do
   end
 
   it 'clears history' do
-    calc = Polski.new_session
     calc << '2'
     calc << '4'
     calc << '3'

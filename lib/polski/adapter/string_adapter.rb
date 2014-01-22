@@ -9,6 +9,7 @@ module Polski
 
       def <<(expression)
         calculator.push(expression)
+        calculator.result
       end
 
       def result
